@@ -80,18 +80,18 @@ async function run(){
     res.send(result);
   });
 //   update order status
-// app.put('/approvedOrder/:id',async(req,res)=>{
-//     const updatedId=req.params.id;
-//     const filter={_id:ObjectId(updatedId)}
-//     const options={upsert:true}
-// const updateDoc={
-//     $set:{
-//     status:updateStatus
-// },
-// }
-// const result=await odersCollection.updateOne(filter,updateDoc,options)
-// res.send(result)
-// });
+app.put('/approvedOrder/:id',async(req,res)=>{
+    const updatedId=req.params.id;
+    const filter={_id:updatedId}
+    const options={upsert:true}
+const updateDoc={
+    $set:{
+    status:updateStatus
+},
+}
+const result=await odersCollection.updateOne(filter,updateDoc,options)
+res.send(result)
+});
 
 }
 
