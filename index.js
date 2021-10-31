@@ -20,15 +20,68 @@ async function run(){
 
         const database=client.db('tour_Hub');
         const toursCollection=database.collection('tours');
+        const odersCollection = database.collection('oders')
+        // .db("odersCollection")
+        // .collection("oders");
          
         // GET Tour API
         app.get('/tours',async (req,res)=>{
             const cursor =toursCollection.find({});
             const tours=await cursor.toArray();
-            res.send(tours);
+            res.send(tours)
+        
+        })
+        // GET Singlr Tour Details
+        app.get('/tours/:id',async(req,res)=>{
+            const id=req.params.id;
+            console.log('specific id',id);
+
+            const query ={_id:ObjectId(id)}
+            const tour=await toursCollection.findOne(query);
+            res.json(tour);
         })
 
+         // add Tour Package
+  app.post("/addTourPackage", async (req, res) => {
+    console.log(req.body);
+    const result = await toursCollection.insertOne(req.body);
+    console.log(result);
+    res.json(result);
+  })
+//     // Place order
+  app.post("/placeOrder", async (req, res) => {
+    console.log(req.body);
+    const result = await odersCollection.insertOne(req.body);
+    res.json(result);
+  });
+
+ // Manage all oders
+
+ app.get("/allOders", async (req, res) => {
+    const result = await odersCollection.find({}).toArray();
+    res.send(result);
+    console.log(result);
+  });
+  // my oders
+
+  app.get("/myOders/:email", async (req, res) => {
+    const result = await odersCollection.find({
+      email: req.params.email,
+    }).toArray();
+    res.send(result);
+  });
+   // delete Order
+
+   app.delete("/deleteOrder/:id", async (req, res) => {
+    console.log(req.params.id);
+    const result = await odersCollection.deleteOne({
+      _id: ObjectId(req.params.id),
+    });
+    res.send(result);
+  });
+
     }
+
     finally{
         // await client.close();
 
