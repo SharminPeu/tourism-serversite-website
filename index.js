@@ -86,7 +86,7 @@ app.put('/approvedOrder/:id',async(req,res)=>{
     const options={upsert:true}
 const updateDoc={
     $set:{
-    status:updateStatus
+    status:"Approved"
 },
 }
 const result=await odersCollection.updateOne(filter,updateDoc,options)
