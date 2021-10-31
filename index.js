@@ -21,8 +21,7 @@ async function run(){
         const database=client.db('tour_Hub');
         const toursCollection=database.collection('tours');
         const odersCollection = database.collection('oders')
-        // .db("odersCollection")
-        // .collection("oders");
+      
          
         // GET Tour API
         app.get('/tours',async (req,res)=>{
@@ -74,13 +73,27 @@ async function run(){
 
    app.delete("/deleteOrder/:id", async (req, res) => {
     console.log(req.params.id);
+    const id=req.params.id;
     const result = await odersCollection.deleteOne({
-      _id: ObjectId(req.params.id),
+      _id:id,
     });
     res.send(result);
   });
+//   update order status
+// app.put('/approvedOrder/:id',async(req,res)=>{
+//     const updatedId=req.params.id;
+//     const filter={_id:ObjectId(updatedId)}
+//     const options={upsert:true}
+// const updateDoc={
+//     $set:{
+//     status:updateStatus
+// },
+// }
+// const result=await odersCollection.updateOne(filter,updateDoc,options)
+// res.send(result)
+// });
 
-    }
+}
 
     finally{
         // await client.close();
