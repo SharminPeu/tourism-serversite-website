@@ -105,7 +105,7 @@ res.send(result)
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('TourHub server is running successfully')
+    res.send('TourHub server is running')
   })
   
   app.listen(port, () => {
